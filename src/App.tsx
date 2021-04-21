@@ -1,21 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import Button, { ButtonType, ButtonSize } from './components/Button/button'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import Button from './components/Button/button'
 
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
-import Icon from './components/Icon/icon'
+import Transition from './components/Transition/transition'
 library.add(fas)
 
 const App: React.FC = () => {
+  const [ show, setShow ] = useState(false)
   return (
     <div className="App">
-      {/* <FontAwesomeIcon icon={faCoffee} /> */}
-      <Icon icon="coffee" theme="primary" size="10x" />
       <Menu defaultIndex={'0'} onSelect={(index) => {alert(index)}} mode="horizontal" defaultOpenSubMenus={[ '2' ]}>
         <MenuItem>
           cool link
@@ -35,12 +32,29 @@ const App: React.FC = () => {
         cool link 3
         </MenuItem>
       </Menu>
-      
-      <Button className="custom">Hello</Button>
-      <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>Hello</Button>
-      <Button btnType={ButtonType.Link} href="http://www.baidu.com" target="_blank" >Baidu Link</Button>
-      <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>Hello</Button>
-      <Button btnType={ButtonType.Link} href="http://www.baidu.com"  disabled>Baidu Link</Button>
+      <Button size='lg' onClick={() => { setShow(!show) }}>
+        Toggle
+      </Button>
+      <Transition
+        in = {show}
+        timeout = {300}
+        animation = "zoom-in-top"
+      >
+      <div>
+        <p>测试动画1</p>
+        <p>测试动画1</p>
+        <p>测试动画1</p>
+        <p>测试动画1</p>
+      </div>
+      </Transition>
+      <Transition
+        in = {show}
+        timeout = {300}
+        animation = "zoom-in-left"
+        wrapper
+      >
+      <Button btnType='primary' size='lg'>测试动画</Button>
+      </Transition>
     </div>
   );
 }
